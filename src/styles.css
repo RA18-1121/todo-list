@@ -66,16 +66,16 @@ body{
     flex-direction: column;
     background-color: #fff7ed;
 
+    img{
+        height: 30px;
+        width: 30px;
+    }
+
     .user{
         display: flex;
         align-items: center;
         font-weight: bold;
         font-size: 24px;
-
-        img{
-            height: 30px;
-            width: 30px;
-        }
 
         #profile-img{
             height: 40px;
@@ -85,6 +85,29 @@ body{
 
         #bell{
             margin-left: auto;
+        }
+    }
+
+    .heading{
+        margin: 5vh 0 2vh;
+        font-weight: bold;
+        font-size: 24px;
+        display: flex;
+
+        img{
+            margin-left: auto;
+        }
+    }
+
+    .project-list{
+        display: grid;
+        grid-template-columns: max-content auto;
+        align-items: center;
+        gap: 16px;
+        font-size: 24px;
+
+        div{
+            width: max-content;
         }
     }
 }
