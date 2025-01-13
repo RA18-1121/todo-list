@@ -1,0 +1,90 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  * {
+    margin: 0;
+  }
+  
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  #root, #__next {
+    isolation: isolate;
+  }
+
+/* *{
+    outline: 2px solid blue;
+} */
+
+body{
+    min-height: 100vh;
+    padding: 3vh 3vw;
+    background-color: #fef3c7;
+}
+
+.container{
+    overflow: auto;
+    height: 94vh;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 2px 0px 2px lightgray, -2px 0px 2px lightgray, 0px 2px 2px lightgray, 0px -2px 2px lightgray;
+    display: grid;
+    grid-template-columns: 300px minmax(600px, 1fr);
+}
+
+.sidebar{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff7ed;
+
+    .user{
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 24px;
+
+        img{
+            height: 30px;
+            width: 30px;
+        }
+
+        #profile-img{
+            height: 40px;
+            width: 40px;
+            margin-right: 8px;
+        }
+
+        #bell{
+            margin-left: auto;
+        }
+    }
+}
