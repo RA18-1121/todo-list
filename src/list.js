@@ -1,10 +1,9 @@
 import {Project} from "./projects";
-import {Todo} from "./todos";
 
 function List(){
     const projectList = [];
 
-    const defaultProject = Project();
+    const defaultProject = Project("Default");
     projectList.push(defaultProject);
 
     const getList = () => projectList;
@@ -14,7 +13,7 @@ function List(){
     const removeFromList = (projectName) => {
         for(let i = 0; i < projectList.length; i++)
         {
-            if(projectList[i].getProjectName() === projectName)
+            if(projectList[i].getProjectName() === projectName && projectName !== "Default")
                 delete projectList[i];
         }
     }

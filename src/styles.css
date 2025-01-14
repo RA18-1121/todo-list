@@ -53,6 +53,7 @@ body{
 .container{
     overflow: auto;
     height: 94vh;
+    min-height: 600px;
     border-radius: 16px;
     background-color: white;
     box-shadow: 2px 0px 2px lightgray, -2px 0px 2px lightgray, 0px 2px 2px lightgray, 0px -2px 2px lightgray;
@@ -108,6 +109,48 @@ body{
 
         div{
             width: max-content;
+        }
+    }
+}
+
+.main{
+    padding: 5vh 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+
+    .header{
+        display: flex;
+        gap: 16px;
+
+        img{
+            width: 40px;
+            height: 40px;
+        }
+
+        .right{
+            margin-left: auto;
+        }
+    }
+
+    .unit{
+        padding: 1vh 16px;
+        outline: 1px solid lightgray;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        .header{
+            padding-bottom: 1vh;
+        }
+        
+        img{
+            width: 30px;
+            height: 30px;
+        }
+
+        .checkbox{
+          margin-right: 4px;
         }
     }
 }

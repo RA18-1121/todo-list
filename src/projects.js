@@ -1,6 +1,6 @@
 import {Todo} from "./todos";
 
-function Project(name){
+function Project(name = "NoName"){
     let projectName = name;
     const getProjectName = () => projectName;
 
