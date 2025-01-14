@@ -98,6 +98,12 @@ body{
         img{
             margin-left: auto;
         }
+
+        #projectAddButton{
+          &:hover{
+            cursor: grab;
+          }
+        }
     }
 
     .project-list{
@@ -125,6 +131,10 @@ body{
 
       #formSubmitButton{
         width: max-content;
+
+        &:hover{
+          cursor: grab;
+        }
       }
     }
 }
@@ -168,5 +178,38 @@ body{
         .checkbox{
           margin-right: 4px;
         }
+    }
+
+    .newTodoDiv{
+      display: flex;
+      font-size: 24px;
+      align-items: center;
+      gap: 8px;
+
+      #newTodoButton{
+        height: 30px;
+        width: 30px;
+
+        &:hover{
+          cursor: grab;
+        }
+      }
+    }
+
+    form{
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+
+      label{
+        display: block;
+      }
+
+      button{
+        width: max-content;
+        &:hover{
+          cursor: grab;
+        }
+      }
     }
 }
