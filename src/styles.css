@@ -119,6 +119,12 @@ body{
         }
     }
 
+    .projectDivText{
+      &:hover{
+        cursor: grab;
+      }
+    }
+
     .newProjectForm{
       padding: 4px;
       display: flex;
@@ -159,6 +165,30 @@ body{
         }
     }
 
+    #editProjectButton,#projectDeleteButton,#todoEditButton,#todoDeleteButton{
+      &:hover{
+        cursor: grab;
+      }
+    }
+
+    .editProjectDiv{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      input{
+        width: 200px;
+      }
+
+      #nameButton{
+        width: max-content;
+
+        &:hover{
+          cursor: grab;
+        }
+      }
+    }
+
     .unit{
         padding: 1vh 16px;
         outline: 1px solid lightgray;
@@ -177,6 +207,11 @@ body{
 
         .checkbox{
           margin-right: 4px;
+        }
+
+        .newTodoForm{
+          border-top: 1px solid black;
+          margin-top: 16px;
         }
     }
 

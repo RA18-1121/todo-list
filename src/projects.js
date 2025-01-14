@@ -14,8 +14,10 @@ function Project(name = "NoName"){
     const removeFromProject = (title) => {
         for(let i = 0; i < todoList.length; i++)
         {
-            if(todoList[i].getTitle() === title)
-                delete todoList[i];
+            if(todoList[i].getTitle() === title){
+                todoList.splice(i, 1);
+                break;
+            }
         }
     }
 

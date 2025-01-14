@@ -13,7 +13,7 @@ function Todo(title, description, dueDate, priority){
 
     const setTitle = (title) => todoTitle = title;
     const setDescription = (description) => todoDescription = description;
-    const setDueDate = (date) => todoDueDate = dueDate;
+    const setDueDate = (dueDate) => todoDueDate = dueDate;
     const setPriority = (priority) => todoPriority = priority;
     const setChecked = (checked) => todoChecked = checked;
 

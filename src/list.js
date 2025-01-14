@@ -10,11 +10,13 @@ function List(){
 
     const addToList = (project) => projectList.push(project);
 
-    const removeFromList = (projectName) => {
+    const removeFromList = (project) => {
         for(let i = 0; i < projectList.length; i++)
         {
-            if(projectList[i].getProjectName() === projectName && projectName !== "Default")
-                delete projectList[i];
+            if(projectList[i].getProjectName() === project.getProjectName()){
+                projectList.splice(i, 1);
+                break;
+            }
         }
     }
 
@@ -22,7 +24,7 @@ function List(){
         for(let i = 0; i < projectList.length; i++)
         {
             if(projectList[i].getProjectName() === projectName)
-                delete projectList[i];
+                return projectList[i];
         }
     }
 
