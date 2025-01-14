@@ -21,7 +21,7 @@ function List(){
     const searchProject = (projectName) => {
         for(let i = 0; i < projectList.length; i++)
         {
-            if(projectList[i].getProjectName === projectName)
+            if(projectList[i].getProjectName() === projectName)
                 delete projectList[i];
         }
     }

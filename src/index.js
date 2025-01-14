@@ -9,6 +9,7 @@ import bin from "./img/main/delete.svg";
 (function ScreenController(){
     const sidebar = document.querySelector(".project-list");
     const main = document.querySelector(".main");
+    const newProjectForm = document.querySelector(".newProjectForm");
     let list = List();
 
     const projectOne = Project("First");
@@ -16,13 +17,13 @@ import bin from "./img/main/delete.svg";
 
     const sidebarLoad =  () => {
         sidebar.textContent = "";
-        list = list.getList();
-        for(let i = 0; i < list.length; i++)
+        const projectArray = list.getList();
+        for(let i = 0; i < projectArray.length; i++)
         {
             const projectImg = document.createElement("img");
             projectImg.src = hashtag;
             const projecttext = document.createElement("div");
-            projecttext.textContent = `${list[i].getProjectName()}`
+            projecttext.textContent = `${projectArray[i].getProjectName()}`
             sidebar.append(projectImg, projecttext);
         }
     }
@@ -70,11 +71,11 @@ import bin from "./img/main/delete.svg";
             unitHeader.append(todoName, todoEdit, todoDelete);
 
             const todoDesc = document.createElement("p");
-            todoDesc.textContent = `${todoArray[i].getDescription()};`
+            todoDesc.textContent = `${todoArray[i].getDescription()}`;
             const todoDate = document.createElement("p");
-            todoDate.textContent = `Due: ${todoArray[i].getDueDate()};` 
+            todoDate.textContent = `Due: ${todoArray[i].getDueDate()}`; 
             const todoPrio = document.createElement("p");
-            todoPrio.textContent = `Priority: ${todoArray[i].getPriority()};`
+            todoPrio.textContent = `Priority: ${todoArray[i].getPriority()}`;
 
             const todoCheckDiv = document.createElement("div");
             const checkInput = document.createElement("input");
@@ -92,4 +93,34 @@ import bin from "./img/main/delete.svg";
     }
 
     mainLoad(projectOne);
+
+    const projectAddButton = document.querySelector("#projectAddButton");
+    projectAddButton.addEventListener("click", () => {
+        if (!document.querySelector("#newProjectName")){
+            const projectLabel = document.createElement("label");
+            projectLabel.textContent = "Project Name: ";
+            projectLabel.setAttribute("for", "newProjectName");
+            const projectInput = document.createElement("input");
+            projectInput.type = "text";
+            projectInput.id = "newProjectName";
+
+            const formSubmitButton = document.createElement("button");
+            formSubmitButton.id = "formSubmitButton";
+            formSubmitButton.textContent = "Add Project";
+            formSubmitButton.addEventListener("click", () => {
+                if(projectInput.value.length >= 3){
+                    const newProject = Project(projectInput.value);
+                list.addToList(newProject);
+                sidebarLoad();
+                newProjectForm.textContent = "";
+                mainLoad(newProject);
+                }
+                else{
+                    alert("Project name must be minimum 3 characters");
+                }
+            })
+
+            newProjectForm.append(projectLabel, projectInput, formSubmitButton);
+        }  
+    })
 })()

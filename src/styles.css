@@ -101,6 +101,7 @@ body{
     }
 
     .project-list{
+      margin-bottom: 2vh;
         display: grid;
         grid-template-columns: max-content auto;
         align-items: center;
@@ -110,6 +111,21 @@ body{
         div{
             width: max-content;
         }
+    }
+
+    .newProjectForm{
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 1vh;
+
+      input{
+        outline: 1px solid black;
+      }
+
+      #formSubmitButton{
+        width: max-content;
+      }
     }
 }
 
