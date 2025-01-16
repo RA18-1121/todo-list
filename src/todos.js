@@ -17,7 +17,15 @@ function Todo(title, description, dueDate, priority){
     const setPriority = (priority) => todoPriority = priority;
     const setChecked = (checked) => todoChecked = checked;
 
-    return {getTitle, getDescription, getDueDate, getPriority, getChecked, setTitle, setDescription, setDueDate, setPriority, setChecked};
+    const toJSON = () => ({
+        title: todoTitle,
+        description: todoDescription,
+        dueDate: todoDueDate,
+        priority: todoPriority,
+        checked: todoChecked
+    });
+
+    return {getTitle, getDescription, getDueDate, getPriority, getChecked, setTitle, setDescription, setDueDate, setPriority, setChecked, toJSON};
 }
 
 export {Todo};

@@ -3,33 +3,31 @@ import {Todo} from "./todos";
 function Project(name = "NoName"){
     let projectName = name;
     const getProjectName = () => projectName;
-
     const setProjectName = (name) => projectName = name;
 
-    const todoList = [];
+    let todoList = [];
     const getTodoList = () => todoList;
 
     const addToProject = (todo) => todoList.push(todo);
+    const removeFromProject = (title) => todoList = todoList.filter(todo => todo.getTitle() !== title);
 
-    const removeFromProject = (title) => {
-        for(let i = 0; i < todoList.length; i++)
-        {
-            if(todoList[i].getTitle() === title){
-                todoList.splice(i, 1);
-                break;
-            }
-        }
+    const searchTodo = (title) => todoList.find(todo => todo.getTitle() === title);
+
+    const toJSON = () => ({
+        projectName: projectName,
+        todoList: todoList.map(todo => todo.toJSON())
+    })
+
+    const loadFromJSON = (projectData) => {
+        projectName = projectData.projectName;
+        todoList = projectData.todoList.map(todoData => {
+            const todo = Todo(todoData.title, todoData.desciption, todoData.dueDate, todoData.priority);
+            todo.setChecked(todoData.checked);
+            return todo;
+        })
     }
 
-    const searchTodo = (title) => {
-        for(let i = 0; i < todoList.length; i++)
-        {
-            if(todoList[i].getTitle() === title)
-                return todoList[i];
-        }
-    }
-
-    return {getProjectName, setProjectName, getTodoList, addToProject, removeFromProject, searchTodo};
+    return {getProjectName, setProjectName, getTodoList, addToProject, removeFromProject, searchTodo, toJSON, loadFromJSON};
 }
 
 export {Project};

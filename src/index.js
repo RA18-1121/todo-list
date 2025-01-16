@@ -14,6 +14,35 @@ import bin from "./img/main/delete.svg";
     const projectAddButton = document.querySelector("#projectAddButton");
     let list = List();
 
+    projectAddButton.addEventListener("click", () => {
+        if (!document.querySelector("#newProjectName")){
+            const projectLabel = document.createElement("label");
+            projectLabel.textContent = "Project Name: ";
+            projectLabel.setAttribute("for", "newProjectName");
+            const projectInput = document.createElement("input");
+            projectInput.type = "text";
+            projectInput.id = "newProjectName";
+
+            const formSubmitButton = document.createElement("button");
+            formSubmitButton.id = "formSubmitButton";
+            formSubmitButton.textContent = "Add Project";
+            formSubmitButton.addEventListener("click", () => {
+                if(projectInput.value.length >= 3){
+                    const newProject = Project(projectInput.value);
+                    list.addToList(newProject);
+                    sidebarLoad();
+                    newProjectForm.textContent = "";
+                    mainLoad(newProject);
+                }
+                else{
+                    alert("Project name must be minimum 3 characters");
+                }
+            })
+
+            newProjectForm.append(projectLabel, projectInput, formSubmitButton);
+        }  
+    })
+
     const sidebarLoad =  () => {
         sidebar.textContent = "";
         const projectArray = list.getList();
@@ -31,37 +60,6 @@ import bin from "./img/main/delete.svg";
             sidebar.append(projectImg, projectText);
         }
     }
-
-    sidebarLoad();
-
-    projectAddButton.addEventListener("click", () => {
-        if (!document.querySelector("#newProjectName")){
-            const projectLabel = document.createElement("label");
-            projectLabel.textContent = "Project Name: ";
-            projectLabel.setAttribute("for", "newProjectName");
-            const projectInput = document.createElement("input");
-            projectInput.type = "text";
-            projectInput.id = "newProjectName";
-
-            const formSubmitButton = document.createElement("button");
-            formSubmitButton.id = "formSubmitButton";
-            formSubmitButton.textContent = "Add Project";
-            formSubmitButton.addEventListener("click", () => {
-                if(projectInput.value.length >= 3){
-                    const newProject = Project(projectInput.value);
-                list.addToList(newProject);
-                sidebarLoad();
-                newProjectForm.textContent = "";
-                mainLoad(newProject);
-                }
-                else{
-                    alert("Project name must be minimum 3 characters");
-                }
-            })
-
-            newProjectForm.append(projectLabel, projectInput, formSubmitButton);
-        }  
-    })
 
     const mainLoad = (project) => {
         main.textContent = "";
@@ -98,6 +96,7 @@ import bin from "./img/main/delete.svg";
                         const projectDiv = document.querySelector(`#${currentProject.getProjectName()}`);
                         projectDiv.setAttribute("id", nameInput.value);
                         currentProject.setProjectName(nameInput.value);
+                        list.saveToStorage();
                         sidebarLoad();
                         mainLoad(currentProject);
                     }
@@ -127,16 +126,15 @@ import bin from "./img/main/delete.svg";
         headerDiv.append(headerName, headerEdit, headerDelete);
         main.append(headerDiv);
 
-        for(let i = 0; i < todoArray.length; i++)
-        {
+        todoArray.forEach((todo, index) => {
             const todoDiv = document.createElement("div");
             todoDiv.classList.add("unit");
-            todoDiv.setAttribute("id", todoArray[i].getTitle());
+            todoDiv.setAttribute("id", todoArray[index].getTitle());
             
             const unitHeader = document.createElement("div");
             unitHeader.classList.add("header");
             const todoName = document.createElement("h2");
-            todoName.textContent = `${todoArray[i].getTitle()}`;
+            todoName.textContent = `${todoArray[index].getTitle()}`;
 
             const todoEdit = document.createElement("img");
             todoEdit.classList.add("right");
@@ -198,6 +196,7 @@ import bin from "./img/main/delete.svg";
                             foundTodo.setDueDate(dateInput.value);
                         if(priorityInput.value.length >= 1)
                             foundTodo.setPriority(priorityInput.value);
+                        list.saveToStorage();
                         mainLoad(currentProject);
                     })
     
@@ -212,32 +211,42 @@ import bin from "./img/main/delete.svg";
 
             todoDelete.addEventListener("click", (event) => { 
                 currentProject.removeFromProject(event.target.parentNode.parentNode.getAttribute("id"));
+                list.saveToStorage();
                 mainLoad(currentProject);
             })
 
             unitHeader.append(todoName, todoEdit, todoDelete);
 
             const todoDesc = document.createElement("p");
-            todoDesc.textContent = `${todoArray[i].getDescription()}`;
+            todoDesc.textContent = `${todoArray[index].getDescription()}`;
             todoDesc.style.fontStyle = "italic";
             const todoDate = document.createElement("p");
-            todoDate.textContent = `Due: ${todoArray[i].getDueDate()}`; 
+            todoDate.textContent = `Due: ${todoArray[index].getDueDate()}`; 
             const todoPrio = document.createElement("p");
-            todoPrio.textContent = `Priority: ${todoArray[i].getPriority()}`;
+            todoPrio.textContent = `Priority: ${todoArray[index].getPriority()}`;
 
             const todoCheckDiv = document.createElement("div");
+
             const checkInput = document.createElement("input");
             checkInput.classList.add("checkbox");
             checkInput.type = "checkbox";
-            checkInput.setAttribute("id", `check${i}`);
+            checkInput.setAttribute("id", `check${index}`);
+            checkInput.checked = todo.getChecked();
+
+            checkInput.addEventListener("click", (event) => {
+                todo.setChecked(event.target.checked);
+                list.saveToStorage();
+            })
+
             const checkLabel = document.createElement("label");
             checkLabel.textContent = "Completed";
-            checkLabel.setAttribute("for", `check${i}`);
+            checkLabel.setAttribute("for", `check${index}`);
             todoCheckDiv.append(checkInput, checkLabel);
 
             todoDiv.append(unitHeader, todoDesc, todoDate, todoPrio, todoCheckDiv);
             main.append(todoDiv);
-        }
+        })
+        
 
         const newTodoDiv = document.createElement("div");
 
@@ -292,6 +301,7 @@ import bin from "./img/main/delete.svg";
                     {
                         const newTodo = Todo(titleInput.value, descriptionInput.value, dateInput.value, priorityInput.value);
                         currentProject.addToProject(newTodo);
+                        list.saveToStorage();
                         mainLoad(currentProject);
                     }
                 })
@@ -308,6 +318,6 @@ import bin from "./img/main/delete.svg";
 
     }
 
+    sidebarLoad();
     mainLoad(list.getList()[0]);
-  
 })()

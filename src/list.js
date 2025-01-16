@@ -1,34 +1,43 @@
 import {Project} from "./projects";
 
 function List(){
-    const projectList = [];
+    let projectList = [];
 
-    const defaultProject = Project("Default");
-    projectList.push(defaultProject);
+    const saveToStorage = () => localStorage.setItem("listData", JSON.stringify(projectList.map(project => project.toJSON())));
+
+    const loadFromStorage = () => {
+        const storedDate = localStorage.getItem("listData");
+        if(storedDate){
+            const storedList = JSON.parse(storedDate);
+            projectList = storedList.map(storedProject => {
+                const project = Project(storedProject.projectName);
+                project.loadFromJSON(storedProject);
+                return project;
+            })
+        }
+        else{
+            const defaultProject = Project("Default");
+            projectList.push(defaultProject);
+            saveToStorage();
+        }
+    }
+    loadFromStorage();
 
     const getList = () => projectList;
 
-    const addToList = (project) => projectList.push(project);
+    const addToList = (project) => {
+        projectList.push(project);
+        saveToStorage();
+    }
 
     const removeFromList = (project) => {
-        for(let i = 0; i < projectList.length; i++)
-        {
-            if(projectList[i].getProjectName() === project.getProjectName()){
-                projectList.splice(i, 1);
-                break;
-            }
-        }
+        projectList = projectList.filter(p => p.getProjectName() !== project.getProjectName());
+        saveToStorage();
     }
 
-    const searchProject = (projectName) => {
-        for(let i = 0; i < projectList.length; i++)
-        {
-            if(projectList[i].getProjectName() === projectName)
-                return projectList[i];
-        }
-    }
+    const searchProject = (projectName) => projectList.find(project => project.getProjectName() === projectName);
 
-    return {getList, addToList, removeFromList, searchProject};
+    return {saveToStorage, loadFromStorage, getList, addToList, removeFromList, searchProject};
 }
 
 export {List};
